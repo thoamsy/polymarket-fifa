@@ -38,7 +38,7 @@ console.log(`limits: maxBet=${config.limits.maxBetUsdc} maxRunNotional=${config.
 console.log("");
 
 for (const fixture of fixtures) {
-  console.log(`${fixture.matchLabel}  (${fixture.eventSlug})`);
+  console.log(`${fixture.matchLabel}  (${fixture.eventSlug})  kickoff=${fixture.gameStartTime || "n/a"}`);
   for (const market of fixture.markets) {
     console.log(
       `  [${market.outcomeKey}] ${market.question}\n` +
@@ -60,6 +60,7 @@ function groupByFixture(rows) {
         matchLabel: row.matchLabel,
         eventSlug: row.eventSlug,
         event: row.event,
+        gameStartTime: row.gameStartTime,
         markets: [],
       });
     }

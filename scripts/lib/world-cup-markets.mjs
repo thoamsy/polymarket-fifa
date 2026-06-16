@@ -30,6 +30,10 @@ export async function fetchWorldCupMarkets(config) {
     const eventRows = [];
     for (const market of event.markets || []) {
       if (!market.active || market.closed || !market.acceptingOrders) continue;
+      // Skip games that have already kicked off — never place pre-match-style orders
+      // on an in-play market. gameStartTime is UTC, so this is timezone-safe.
+      const startMs = parseGameStart(market.gameStartTime);
+      if (Number.isFinite(startMs) && startMs <= Date.now()) continue;
       if (!isWinDrawLossMarket(event, market)) continue;
       const row = toMarketRow(event, market, fixture);
       if (!row.yesTokenId || !Number.isFinite(row.yes) || row.yes <= 0 || row.yes >= 1) continue;
@@ -46,6 +50,13 @@ export async function fetchWorldCupMarkets(config) {
   }
 
   return rows.sort((a, b) => b.volume24hr - a.volume24hr || b.liquidity - a.liquidity);
+}
+
+function parseGameStart(value) {
+  if (!value) return NaN;
+  let text = String(value).trim().replace(" ", "T");
+  if (/\+00$/.test(text)) text = text.replace(/\+00$/, "Z");
+  return Date.parse(text);
 }
 
 function isWinDrawLossMarket(event, market) {
@@ -123,6 +134,7 @@ function toMarketRow(event, market, fixture) {
     marketSlug: market.slug,
     conditionId: market.conditionId,
     acceptingOrders: Boolean(market.acceptingOrders),
+    gameStartTime: market.gameStartTime || null,
     negRisk: Boolean(market.negRisk),
     tickSize,
     minSize: Number(market.orderMinSize || 5),
