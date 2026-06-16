@@ -1,5 +1,9 @@
 node_modules/
 dist/
 .vite/
+runs/
 *.tsbuildinfo
 .DS_Store
+.env
+.env.*
+!.env.example

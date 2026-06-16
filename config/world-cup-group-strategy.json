@@ -1,0 +1,22 @@
+{
+  "tagSlug": "2026-fifa-world-cup",
+  "snapshot": {
+    "maxFixturesPerRun": 4
+  },
+  "limits": {
+    "maxOrdersPerRun": 4,
+    "maxBetUsdc": 10,
+    "maxRunNotionalUsdc": 30,
+    "priceMin": 0.1,
+    "priceMax": 0.82
+  },
+  "execution": {
+    "dryRun": true,
+    "orderType": "GTC",
+    "postOnly": false,
+    "planMaxAgeSeconds": 600,
+    "unfilledCancelSeconds": 300,
+    "pollIntervalSeconds": 15,
+    "outputPath": "runs/latest-plan.json"
+  }
+}

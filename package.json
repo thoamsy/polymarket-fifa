@@ -6,15 +6,23 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "poly:derive-key": "node scripts/derive-clob-key.mjs",
+    "poly:verify": "node scripts/verify-clob.mjs",
+    "poly:snapshot": "node scripts/snapshot.mjs",
+    "poly:execute-plan": "node scripts/execute-strategy-plan.mjs",
+    "poly:watch-fills": "node scripts/watch-fills.mjs"
   },
   "dependencies": {
+    "@polymarket/clob-client-v2": "^1.0.6",
     "@tanstack/react-query": "^5.101.0",
     "@tanstack/react-query-persist-client": "^5.101.0",
     "@vitejs/plugin-react": "^4.5.0",
+    "dotenv": "^17.4.2",
     "lucide-react": "^0.511.0",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "viem": "^2.52.2"
   },
   "devDependencies": {
     "@types/node": "^25.9.1",
